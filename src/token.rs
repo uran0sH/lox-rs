@@ -55,6 +55,16 @@ pub enum Literal {
     Number(f64),
 }
 
+impl std::fmt::Display for Literal {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Literal::Number(x) => write!(f, "{x}"),
+            Literal::String(x) => write!(f, "{x}"),
+            _ => panic!("Should not be trying to print this"),
+        }
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct Token {
     token_type: TokenType,

@@ -1,4 +1,6 @@
+mod ast_printer;
 mod error;
+mod expr;
 mod scanner;
 mod token;
 mod util;
