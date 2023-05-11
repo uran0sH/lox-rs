@@ -1,12 +1,15 @@
 mod ast_printer;
 mod error;
 mod expr;
+mod parser;
 mod scanner;
 mod token;
 mod util;
 
 use std::io::Write;
 
+use ast_printer::AstPrinter;
+use parser::Parser;
 use scanner::Scanner;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
@@ -54,5 +57,16 @@ pub fn run(line: &str) -> Result<()> {
     tokens.iter().for_each(|t| {
         println!("{}", t);
     });
+    println!("\x1b[0;32mParsing...\x1b[0m");
+    let mut parser = Parser::new(tokens);
+    match parser.parse() {
+        None => {
+            println!("AST None");
+        }
+        Some(expr) => {
+            let printer = AstPrinter::new();
+            println!("AST Printer:\n{}", printer.print(&expr)?);
+        }
+    }
     Ok(())
 }

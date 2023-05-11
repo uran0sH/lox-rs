@@ -1,4 +1,4 @@
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TokenType {
     // Single-character tokens.
     LeftParen,
@@ -53,6 +53,9 @@ pub enum TokenType {
 pub enum Literal {
     String(String),
     Number(f64),
+    Nil,
+    Bool(bool),
+    ArthmeticError,
 }
 
 impl std::fmt::Display for Literal {
@@ -60,6 +63,14 @@ impl std::fmt::Display for Literal {
         match self {
             Literal::Number(x) => write!(f, "{x}"),
             Literal::String(x) => write!(f, "{x}"),
+            Literal::Bool(x) => {
+                if *x {
+                    write!(f, "true")
+                } else {
+                    write!(f, "false")
+                }
+            }
+            Literal::Nil => write!(f, "nil"),
             _ => panic!("Should not be trying to print this"),
         }
     }
@@ -96,5 +107,21 @@ impl Token {
             line,
             literal,
         }
+    }
+
+    pub fn get_token_type(&self) -> TokenType {
+        self.token_type
+    }
+
+    pub fn get_literal(&self) -> &Option<Literal> {
+        &self.literal
+    }
+
+    pub fn get_line(&self) -> usize {
+        self.line
+    }
+
+    pub fn get_lexeme(&self) -> String {
+        self.lexeme.clone()
     }
 }

@@ -4,6 +4,9 @@ use crate::expr::*;
 pub struct AstPrinter;
 
 impl AstPrinter {
+    pub fn new() -> Self {
+        Self {}
+    }
     pub fn print(&self, expr: &Expr) -> Result<String, LoxError> {
         expr.accept(self)
     }
