@@ -5,12 +5,15 @@ mod parser;
 mod scanner;
 mod token;
 mod util;
+mod interpreter;
 
 use std::io::Write;
 
 use ast_printer::AstPrinter;
 use parser::Parser;
 use scanner::Scanner;
+
+use crate::interpreter::Interpreter;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -66,6 +69,8 @@ pub fn run(line: &str) -> Result<()> {
         Some(expr) => {
             let printer = AstPrinter::new();
             println!("AST Printer:\n{}", printer.print(&expr)?);
+            let interpreter = Interpreter {};
+            interpreter.interpret(&expr);
         }
     }
     Ok(())

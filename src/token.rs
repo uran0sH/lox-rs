@@ -49,13 +49,13 @@ pub enum TokenType {
     Eof,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Literal {
     String(String),
     Number(f64),
     Nil,
     Bool(bool),
-    ArthmeticError,
+    ArithmeticError,
 }
 
 impl std::fmt::Display for Literal {
